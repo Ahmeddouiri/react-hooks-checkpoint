@@ -56,22 +56,31 @@ function MovieList() {
   const [inputrate, setInputrate] = useState("");
   const [inputdescription, setInputdescription] = useState("");
   const [inputposterURL, setInputposterURL] = useState("");
-  const addmovie = (Movie) => {
-    setListofmovie([...listofmovie, Movie]);
-  };
+  
+  
   const add = () => {
-    addmovie({
-      title: inputTile,
+    let url = inputposterURL.toString()
+    let ratenew
+    if(inputrate>10)
+    { ratenew = 1}
+    else{ ratenew = inputrate}
+    const newMovie = {
+      Title: inputTile,
       Year: inputYear,
-      rate: inputrate,
+      rate: ratenew,
       description: inputdescription,
-      posterURL: inputposterURL,
+      posterURL: url
+    };
+      console.log(newMovie)
+    setListofmovie([...listofmovie, newMovie]);
 
-    })
-
-    setListofmovie([...listofmovie, addmovie]);
-
-  }
+    // Clear input fields
+    setInputTitle('');
+    setInputYear('');
+    setInputrate('');
+    setInputdescription('');
+    setInputposterURL('');
+  };
 
 
   return (
@@ -127,15 +136,7 @@ function MovieList() {
           <Card.Title className="mb-3 align-self-start" ><h2>Results</h2></Card.Title>
           <Row md={4}>
 
-            {/* .filter(
-                  (moviel) =>
-                    moviel.Title
-                      
-                    .toLowerCase(movietitle).includes(movietitle) &&
-                    moviel.rate
-                
-                    .toLowerCase(movierate).includes(movierate)
-                ) */}
+            
             {listofmovie.filter((movie) => movie.Title.toLowerCase().includes(movietitle
             .toLowerCase())&& movie.rate.toLowerCase().includes(movierate
               .toLowerCase())).map((movie, key) => (
